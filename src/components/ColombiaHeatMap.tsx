@@ -1,12 +1,14 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ComposableMap,
   Geographies,
   Geography,
 } from "react-simple-maps";
+import * as XLSX from 'xlsx';
 
 // Importa tu archivo GeoJSON de departamentos
 import colombiaGeo from "./Colombia.geo.json";
+import { useEffect } from "react";
 
 // Define los departamentos válidos
 type Departamento =
@@ -33,42 +35,84 @@ const getColor = (value: number) => {
 };
 
 // Type guard para verificar si un nombre es un Departamento válido
-function isDepartamento(key: any): key is Departamento {
-  return key in frequencies;
+interface ExcelData {
+  dataBySheet: Record<string, any[]>;
+  vacunasNombres: string[];
+  anios: string[];
 }
 
-const ColombiaHeatMap: React.FC = () => (
-  <ComposableMap
-    projection="geoMercator"
-    projectionConfig={{ scale: 2000, center: [-74, 4.5] }}
-  >
-    <Geographies geography={colombiaGeo}>
-      {({ geographies }) =>
-        geographies.map((geo) => {
-          const name = geo.properties.NOMBRE_DPT;
-          const value = isDepartamento(name) ? frequencies[name] : 0;
+async function loadLocalExcel(): Promise<ExcelData> {
+  const response = await fetch('/data/data.xlsx');
+  const arrayBuffer = await response.arrayBuffer();
 
-          return (
-            <Geography
-              key={geo.rsmKey}
-              geography={geo}
-              fill={getColor(value)}
-              stroke="#FFF"
-              strokeWidth={0.5}
-              onClick={() => console.log(name)}
-              style={{
-                default: { fill: "#06F" },
-                hover: { fill: "#04D" },
-                pressed: { fill: "#02A" },
-              }}
-            >
-              <h1>ervereverg</h1>
-            </Geography>
-          );
-        })
-      }
-    </Geographies>
-  </ComposableMap>
-);
+  const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+  const dataBySheet: Record<string, any[]> = {};
+  workbook.SheetNames.forEach(sheetName => {
+    const worksheet = workbook.Sheets[sheetName];
+    dataBySheet[sheetName] = XLSX.utils.sheet_to_json(worksheet, {
+      defval: null,
+      raw: false
+    });
+  });
 
-export default ColombiaHeatMap;
+  const primeraFila = dataBySheet['2014'][0];
+  const llavesAExcluir = [
+    "CODEP",
+    "DEPARTAMENTOS",
+    "Población Menor 1 año (Meta",
+    "Población 5 años (Meta"
+  ];
+  const vacunasNombres = Object.keys(primeraFila)
+    .filter(item => !llavesAExcluir.includes(item));
+  const anios = Object.keys(dataBySheet);
+
+  return { dataBySheet, vacunasNombres, anios };
+}
+
+export default function ColombiaHeatMap() {
+
+  useEffect(() => {
+    loadLocalExcel()
+      .then(data => {
+        console.log('Datos cargados por año:', data);
+        // aquí podrías setear estado, procesar, etc.
+      })
+      .catch(err => {
+        console.error('Error cargando Excel:', err);
+      });
+  }, []);
+
+  return (
+    <ComposableMap
+      projection="geoMercator"
+      projectionConfig={{ scale: 2000, center: [-74, 4.5] }}
+    >
+      <Geographies geography={colombiaGeo}>
+        {({ geographies }) =>
+          geographies.map((geo) => {
+            const name = geo.properties.NOMBRE_DPT;
+            const value = 0;
+
+            return (
+              <Geography
+                key={geo.rsmKey}
+                geography={geo}
+                fill={getColor(value)}
+                stroke="#FFF"
+                strokeWidth={0.5}
+                onClick={() => console.log(name)}
+                style={{
+                  default: { fill: "#06F" },
+                  hover: { fill: "#04D" },
+                  pressed: { fill: "#02A" },
+                }}
+              >
+                <h1>ervereverg</h1>
+              </Geography>
+            );
+          })
+        }
+      </Geographies>
+    </ComposableMap>
+  )
+}
