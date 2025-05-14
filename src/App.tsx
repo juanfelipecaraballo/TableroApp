@@ -28,7 +28,7 @@ async function loadLocalExcel(): Promise<ExcelData> {
     "Población 5 años (Meta"
   ];
   const vacunasNombres = Object.keys(primeraFila)
-    .filter(item => !llavesAExcluir.includes(item));
+    .filter(item => !llavesAExcluir.includes(item) && !item.includes('%'));
   const anios = Object.keys(dataBySheet);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const departamentos = dataBySheet['2014'].map((item: any) => item.DEPARTAMENTOS === 'TOTAL' ? null : item.DEPARTAMENTOS).filter((item: string | null) => item !== null);
@@ -49,7 +49,7 @@ function App() {
   }, []);
 
   return (
-    <main>
+    <main className='w-screen h-screen'>
       <ColombiaHeatMap data={data} />
     </main>
   );
