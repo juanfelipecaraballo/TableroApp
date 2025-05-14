@@ -4,6 +4,9 @@ import './App.css'
 import ColombiaHeatMap from "./components/ColombiaHeatMap.tsx";
 import * as XLSX from 'xlsx';
 import type { ExcelData } from './types.ts';
+import LineChartVacuna from './components/LineChartVacuna.tsx';
+import BarChartVacunas from './components/BarChartVacunas.tsx';
+
 
 async function loadLocalExcel(): Promise<ExcelData> {
   const response = await fetch('/data/data.xlsx');
@@ -37,6 +40,7 @@ async function loadLocalExcel(): Promise<ExcelData> {
 }
 function App() {
   const [data, setData] = useState<ExcelData | null>(null);
+  
   useEffect(() => {
     loadLocalExcel()
       .then(data => {
@@ -49,8 +53,12 @@ function App() {
   }, []);
 
   return (
-    <main className='w-screen h-screen'>
-      <ColombiaHeatMap data={data} />
+    <main className="p-20 w-screen h-screen overflow-scroll">
+        <ColombiaHeatMap data={data} />
+        <LineChartVacuna
+          data={data}  
+        />
+        {data && <BarChartVacunas data={data} />}
     </main>
   );
 }
