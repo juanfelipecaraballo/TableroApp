@@ -5,6 +5,8 @@ import ColombiaHeatMap from "./components/ColombiaHeatMap.tsx";
 import * as XLSX from 'xlsx';
 import type { ExcelData } from './types.ts';
 import LineChartVacuna from './components/LineChartVacuna.tsx';
+import BarChartVacunas from './components/BarChartVacunas.tsx';
+
 
 async function loadLocalExcel(): Promise<ExcelData> {
   const response = await fetch('/data/data.xlsx');
@@ -51,13 +53,15 @@ function App() {
   }, []);
 
   return (
-    <main className="p-20 w-screen h-screen">
+    <main className="p-20 w-screen h-screen overflow-scroll">
       
 
       
         <LineChartVacuna
           data={data}  
         />
+        {data && <BarChartVacunas data={data} />}
+        
     
     </main>
   );
