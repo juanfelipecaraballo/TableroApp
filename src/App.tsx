@@ -53,7 +53,7 @@ function App() {
   }, []);
 
   return (
-    <main className="p-20 w-screen h-screen overflow-scroll">
+    <main className="p-20 w-screen h-screen overflow-scroll bg-white">
         <ColombiaHeatMap data={data} />
         <LineChartVacuna
           data={data}  

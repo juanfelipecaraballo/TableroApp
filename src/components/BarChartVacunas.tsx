@@ -32,7 +32,7 @@ export default function BarChartVacunas({ data }: Props) {
     <section>
     <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
         <select
-          className="bg-gray-50 border border-gray-300 text-sm rounded-lg p-2.5"
+          className="bg-gray-50 border border-gray-300 text-sm rounded-lg p-2.5 text-black"
           onChange={(e) => setSelectedAnio(e.target.value)}
         >
           <option value="">Seleccione un año</option>
@@ -41,7 +41,7 @@ export default function BarChartVacunas({ data }: Props) {
           ))}
         </select>
         <select
-          className="bg-gray-50 border border-gray-300 text-sm rounded-lg p-2.5"
+          className="bg-gray-50 border border-gray-300 text-sm rounded-lg p-2.5 text-black"
           onChange={(e) => setSelectedDepartamento(e.target.value)}
         >
           <option value="">Seleccione un departamento</option>

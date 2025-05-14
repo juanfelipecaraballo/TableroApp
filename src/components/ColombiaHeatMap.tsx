@@ -65,7 +65,7 @@ function ColorScaleLegend() {
 
 function DepartmentDetail({departmentName, departmentCoverage}: { departmentName: string, departmentCoverage: number }) {
   return (
-    <article className="bg-white shadow-md rounded-lg p-4 mt-4">
+    <article className="bg-white shadow-md rounded-lg p-4 mt-4 text-black">
       <h2 className="text-xl font-bold mb-2">{departmentName}</h2>
       <p className="text-gray-700">
         Cobertura de vacuna: {departmentCoverage}%
@@ -110,7 +110,7 @@ export default function ColombiaHeatMap({ data }: { data: ExcelData | null }) {
       <h1 className="text-3xl font-bold text-center">Cobertura de vacunas de Colombia</h1>
 
       <div className="flex gap-4">
-        <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setSelectedYear(e.target.value)}>
+        <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" onChange={(e) => setSelectedYear(e.target.value)}>
           <option selected>Seleccione su año de interés</option>
           {data?.anios.map((anio) => (
             <option key={anio} value={anio}>
@@ -119,7 +119,7 @@ export default function ColombiaHeatMap({ data }: { data: ExcelData | null }) {
           ))}
         </select>
 
-        <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setSelectedVaccine(e.target.value)}>
+        <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" onChange={(e) => setSelectedVaccine(e.target.value)}>
           <option selected>Seleccione su vacuna de interés</option>
           {data?.vacunasNombres.map((vacuna) => (
             <option key={vacuna} value={vacuna}>
