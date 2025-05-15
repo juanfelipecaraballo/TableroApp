@@ -88,9 +88,9 @@ function DepartmentDetail({ departmentName, departmentCoverage, selectedVaccine,
 };
 
 export default function ColombiaHeatMap({ data }: { data: ExcelData | null }) {
-  const [selectedYear, setSelectedYear] = useState<string | null>(null);
-  const [selectedVaccine, setSelectedVaccine] = useState<string | null>(null);
-  const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
+  const [selectedYear, setSelectedYear] = useState<string | null>('2014');
+  const [selectedVaccine, setSelectedVaccine] = useState<string | null>('VOP <DE1 AÑO + VIP <1AÑO 3as');
+  const [selectedDepartment, setSelectedDepartment] = useState<string | null>('AMAZONAS');
   const [frequenciesByDepartment, setFrequenciesByDepartment] = useState<Record<string, number>>({});
 
   useEffect(() => {
@@ -125,8 +125,7 @@ export default function ColombiaHeatMap({ data }: { data: ExcelData | null }) {
 
       <div className="flex gap-4 h-full">
         <div className="h-full flex flex-col gap-4 w-1/3">
-          <select id="countries" className={getSelectStyle(selectedYear)} onChange={(e) => setSelectedYear(e.target.value)}>
-            <option selected>Seleccione su año de interés</option>
+          <select id="countries" className={getSelectStyle(selectedYear)} onChange={(e) => setSelectedYear(e.target.value)} value={selectedYear?.toString()}>
             {data?.anios.map((anio) => (
               <option key={anio} value={anio}>
                 {anio}
@@ -134,8 +133,7 @@ export default function ColombiaHeatMap({ data }: { data: ExcelData | null }) {
             ))}
           </select>
 
-          <select id="countries" className={getSelectStyle(selectedVaccine)} onChange={(e) => setSelectedVaccine(e.target.value)}>
-            <option selected>Seleccione su vacuna de interés</option>
+          <select id="countries" className={getSelectStyle(selectedVaccine)} onChange={(e) => setSelectedVaccine(e.target.value)} value={selectedVaccine?.toString()}>
             {data?.vacunasNombres.map((vacuna) => (
               <option key={vacuna} value={vacuna}>
                 {vacuna}

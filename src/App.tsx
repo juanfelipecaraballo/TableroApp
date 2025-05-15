@@ -6,6 +6,8 @@ import * as XLSX from 'xlsx';
 import type { ExcelData } from './types.ts';
 import LineChartVacuna from './components/LineChartVacuna.tsx';
 import BarChartVacunas from './components/BarChartVacunas.tsx';
+import EstadisticasGlobales from './components/EstadisticasGlobales.tsx';
+import TopDepartamentos from './components/TopDepartamentos.tsx';
 
 
 async function loadLocalExcel(): Promise<ExcelData> {
@@ -57,13 +59,17 @@ function App() {
 
   return (
     <main className="w-screen h-screen overflow-scroll bg-white">
+      <h1 className='text-6xl m-16 font-bold text-center'>Cobertura de vacunación en Colombia</h1>
+      <h2 className='text-5xl m-16 font-bold text-center'>Tablero descriptivo</h2>
+      <EstadisticasGlobales data={data} />
       <ColombiaHeatMap data={data} />
       <div className='flex m-16 gap-8 justify-between box-border'>
-        <LineChartVacuna
-          data={data}
-        />
+        {data && <TopDepartamentos data={data} />}
         {data && <BarChartVacunas data={data} />}
       </div>
+      <LineChartVacuna
+        data={data}
+      />
     </main>
   );
 }

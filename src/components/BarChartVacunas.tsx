@@ -8,8 +8,8 @@ interface Props {
 }
 
 export default function BarChartVacunas({ data }: Props) {
-  const [selectedDepartamento, setSelectedDepartamento] = useState<string | null>(null);
-  const [selectedAnio, setSelectedAnio] = useState<string | null>(null);
+  const [selectedDepartamento, setSelectedDepartamento] = useState<string | null>('AMAZONAS');
+  const [selectedAnio, setSelectedAnio] = useState<string | null>('2014');
   const [topType, setTopType] = useState<'mayor' | 'menor'>('mayor');
   const [chartData, setChartData] = useState<{ vacuna: string; cobertura: number }[]>([]);
 
@@ -45,8 +45,35 @@ export default function BarChartVacunas({ data }: Props) {
     }
   }, [selectedDepartamento, selectedAnio, topType, data.vacunasNombres, data.dataBySheet]);
 
+  let mensaje = '';
+  let recomendacion = '';
+
+  if (chartData.length > 0) {
+    const nombres = chartData.map(d => d.vacuna).join(', ');
+    if (topType === 'mayor') {
+      mensaje = `Las vacunas con mayor cobertura en ${selectedDepartamento} durante ${selectedAnio} son: ${nombres}.`;
+      const allHigh = chartData.every(d => d.cobertura >= 95);
+      if (allHigh) {
+        recomendacion = '¡Excelente! Todas las vacunas del top 5 superan el 95% de cobertura. Mantén las estrategias actuales.';
+      } else {
+        recomendacion = 'Buen trabajo, pero busca que todas las vacunas superen el 95% de cobertura para una protección óptima.';
+      }
+    } else {
+      mensaje = `Las vacunas con menor cobertura en ${selectedDepartamento} durante ${selectedAnio} son: ${nombres}.`;
+      const anyLow = chartData.some(d => d.cobertura < 80);
+      if (anyLow) {
+        recomendacion = 'Atención: Hay vacunas con coberturas menores al 80%. Refuerza campañas y estrategias de vacunación para mejorar estos indicadores.';
+      } else {
+        recomendacion = 'Las coberturas son aceptables, pero siempre es posible mejorar. Analiza causas y refuerza la promoción.';
+      }
+    }
+  } else {
+    mensaje = 'No hay datos suficientes para mostrar recomendaciones.';
+    recomendacion = '';
+  }
+
   return (
-    <section className='bg-zinc-100 p-8 rounded-2xl w-3/5'>
+    <section className='bg-zinc-100 p-8 rounded-2xl w-1/2'>
       <h1 className="text-3xl font-bold text-center mb-8 h-20">
         Top 5 vacunas con {topType === 'mayor' ? 'mayor' : 'menor'} cobertura por departamento y año
       </h1>
@@ -55,8 +82,8 @@ export default function BarChartVacunas({ data }: Props) {
         <select
           className={getSelectStyle(selectedAnio)}
           onChange={(e) => setSelectedAnio(e.target.value)}
+          value={selectedAnio?.toString()}
         >
-          <option value="Seleccione un año">Seleccione un año</option>
           {data?.anios.map((vac) => (
             <option key={vac} value={vac}>{vac}</option>
           ))}
@@ -64,8 +91,8 @@ export default function BarChartVacunas({ data }: Props) {
         <select
           className={getSelectStyle(selectedDepartamento)}
           onChange={(e) => setSelectedDepartamento(e.target.value)}
+          value={selectedDepartamento?.toString()}
         >
-          <option value="Seleccione un departamento">Seleccione un departamento</option>
           {data?.departamentos.map((dep) => (
             <option key={dep} value={dep}>{dep}</option>
           ))}
@@ -94,6 +121,11 @@ export default function BarChartVacunas({ data }: Props) {
           <Bar dataKey="cobertura" fill="#8884d8" />
         </BarChart>
       </ResponsiveContainer>
+
+      <div className="mt-8 p-4 rounded-xl border border-gray-300 bg-white shadow text-center h-40">
+        <p className="text-lg font-semibold">{mensaje}</p>
+        {recomendacion && <p className="text-sm text-gray-600 mt-2">{recomendacion}</p>}
+      </div>
     </section>
   );
 }
