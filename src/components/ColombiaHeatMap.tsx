@@ -76,7 +76,14 @@ function DepartmentDetail({ departmentName, departmentCoverage, selectedVaccine,
       <p className="text-gray-700">
         Cobertura de la vacuna {selectedVaccine} en {selectedYear}: {departmentCoverage}%
       </p>
-      <p className="text-gray-700">
+      <p className={
+        "rounded px-3 py-2 mt-2 font-medium " +
+        (departmentCoverage < 50
+          ? "bg-red-100 text-red-700"
+          : departmentCoverage < 80
+            ? "bg-orange-100 text-orange-700"
+            : "bg-green-100 text-green-700")
+      }>
         {departmentCoverage < 50
           ? "La cobertura de vacunas es baja. Se recomienda aumentar la vacunación."
           : departmentCoverage < 80

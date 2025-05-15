@@ -116,7 +116,23 @@ export default function TopDepartamentos({ data }: Props) {
       </ResponsiveContainer>
       <div className="mt-8 p-4 rounded-xl border border-gray-300 bg-white shadow text-center h-40">
         <p className="text-lg font-semibold">{mensaje}</p>
-        {recomendacion && <p className="text-sm text-gray-600 mt-2">{recomendacion}</p>}
+        {recomendacion && (
+          <p
+            className={
+              "text-sm mt-2 rounded px-3 py-2 font-medium " +
+              (topType === 'mayor'
+                ? chartData.every(d => d.cobertura >= 95)
+                  ? "bg-green-100 text-green-700"
+                  : "bg-orange-100 text-orange-700"
+                : chartData.some(d => d.cobertura < 80)
+                  ? "bg-red-100 text-red-700"
+                  : "bg-orange-100 text-orange-700"
+              )
+            }
+          >
+            {recomendacion}
+          </p>
+        )}
       </div>
     </section>
   );

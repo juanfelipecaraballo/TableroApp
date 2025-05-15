@@ -97,7 +97,23 @@ export default function LineChartVacuna({ data }: Props) {
 
       <div className="mt-8 p-4 rounded-xl border border-gray-300 bg-white shadow text-center w-2/3 mx-auto">
         <p className="text-lg font-semibold">{mensaje}</p>
-        {recomendacion && <p className="text-sm text-gray-600 mt-2">{recomendacion}</p>}
+        {recomendacion && (
+          <p
+            className={
+              "text-sm mt-2 rounded px-3 py-2 font-medium " +
+              (tendencia === 'creciente'
+                ? "bg-green-100 text-green-700"
+                : tendencia === 'estable'
+                  ? "bg-orange-100 text-orange-700"
+                  : tendencia === 'decreciente'
+                    ? "bg-red-100 text-red-700"
+                    : "bg-gray-100 text-gray-700"
+              )
+            }
+          >
+            {recomendacion}
+          </p>
+        )}
       </div>
     </section>
   );
