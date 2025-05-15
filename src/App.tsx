@@ -28,7 +28,10 @@ async function loadLocalExcel(): Promise<ExcelData> {
     "CODEP",
     "DEPARTAMENTOS",
     "Población Menor 1 año (Meta",
-    "Población 5 años (Meta"
+    "Población 5 años (Meta",
+    "Población de 1 Año (Meta",
+    "FLU de 50 años y más",
+    "Gestantes a partir de la semana 14",
   ];
   const vacunasNombres = Object.keys(primeraFila)
     .filter(item => !llavesAExcluir.includes(item) && !item.includes('%'));
@@ -40,7 +43,7 @@ async function loadLocalExcel(): Promise<ExcelData> {
 }
 function App() {
   const [data, setData] = useState<ExcelData | null>(null);
-  
+
   useEffect(() => {
     loadLocalExcel()
       .then(data => {
@@ -53,12 +56,14 @@ function App() {
   }, []);
 
   return (
-    <main className="p-20 w-screen h-screen overflow-scroll bg-white">
-        <ColombiaHeatMap data={data} />
+    <main className="w-screen h-screen overflow-scroll bg-white">
+      <ColombiaHeatMap data={data} />
+      <div className='flex m-16 gap-8 justify-between box-border'>
         <LineChartVacuna
-          data={data}  
+          data={data}
         />
         {data && <BarChartVacunas data={data} />}
+      </div>
     </main>
   );
 }
