@@ -87,9 +87,9 @@ export default function EstadisticasGlobales({ data }: { data: ExcelData | null 
       <div className="flex gap-4 mt-8">
         {/* Promedio de cobertura */}
         <article className="bg-white w-1/4 border border-gray-300 rounded-2xl p-4 shadow-md h-56 flex items-center justify-center flex-col">
-          <h1 className="text-2xl font-bold text-center mb-4">Promedio de cobertura</h1>
+          <h1 className="text-gray-500 font-bold text-center mb-4">Promedio de cobertura</h1>
           <p className={
-            "text-xl font-bold text-center " +
+            "text-4xl font-bold text-center " +
             (promedioDeCobertura !== null
               ? promedioDeCobertura >= 95
                 ? "text-green-600"
@@ -114,9 +114,9 @@ export default function EstadisticasGlobales({ data }: { data: ExcelData | null 
 
         {/* Desviación estándar */}
         <article className="bg-white w-1/4 border border-gray-300 rounded-2xl p-4 shadow-md h-56 flex items-center justify-center flex-col">
-          <h1 className="text-2xl font-bold text-center mb-4">Desviación estándar</h1>
+          <h1 className="text-gray-500 font-bold text-center mb-4">Desviación estándar</h1>
           <p className={
-            "text-xl font-bold text-center " +
+            "text-4xl font-bold text-center " +
             (desviacionEstandar !== null
               ? desviacionEstandar < 5
                 ? "text-green-600"
@@ -139,9 +139,9 @@ export default function EstadisticasGlobales({ data }: { data: ExcelData | null 
 
         {/* Cobertura máxima */}
         <article className="bg-white w-1/4 border border-gray-300 rounded-2xl p-4 shadow-md h-56 flex items-center justify-center flex-col">
-          <h1 className="text-2xl font-bold text-center mb-4">Cobertura máxima</h1>
+          <h1 className="text-gray-500 font-bold text-center mb-4">Cobertura máxima</h1>
           <p className={
-            "text-xl font-bold text-center " +
+            "text-4xl font-bold text-center " +
             (maxCobertura !== null
               ? maxCobertura >= 95
                 ? "text-green-600"
@@ -166,9 +166,9 @@ export default function EstadisticasGlobales({ data }: { data: ExcelData | null 
 
         {/* Cobertura mínima */}
         <article className="bg-white w-1/4 border border-gray-300 rounded-2xl p-4 shadow-md h-56 flex items-center justify-center flex-col">
-          <h1 className="text-2xl font-bold text-center mb-4">Cobertura mínima</h1>
+          <h1 className="text-gray-500 font-bold text-center mb-4">Cobertura mínima</h1>
           <p className={
-            "text-xl font-bold text-center " +
+            "text-4xl font-bold text-center " +
             (minCobertura !== null
               ? minCobertura >= 80
                 ? "text-green-600"

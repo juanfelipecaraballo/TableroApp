@@ -122,8 +122,8 @@ export default function BarChartVacunas({ data }: Props) {
         </BarChart>
       </ResponsiveContainer>
 
-      <div className="mt-8 p-4 rounded-xl border border-gray-300 bg-white shadow text-center h-40">
-        <p className="text-lg font-semibold">{mensaje}</p>
+      <div className="mt-8 p-4 rounded-xl border border-gray-300 bg-white shadow text-center h-48">
+        <p className="text-lg font-semibold h-24">{mensaje}</p>
         {recomendacion && (
           <p
             className={
