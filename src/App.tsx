@@ -11,6 +11,9 @@ import PruebaHipotesis from './components/PruebaHipotesis.tsx';
 import getSelectStyle from './utils/getSelectStyle.ts';
 import ComparacionMedias from './components/ComparacionMedias.tsx';
 import ComparacionMediaHistorica from './components/ComparacionMediaHistorica.tsx';
+import CoberturaRecomendada from './components/CoberturaRecomendada.tsx';
+import TendenciaBrechaCobertura from './components/TendenciaBrechaCobertura.tsx';
+import EstadisticasGrupoPeriodo from './components/EstadisticasGrupoPeriodo.tsx';
 
 interface DepartamentoPDET {
   departamento: string;
@@ -131,6 +134,7 @@ function App() {
   return (
     <main className="w-screen h-screen overflow-scroll bg-white">
       <h1 className='text-6xl m-16 font-bold text-center'>Cobertura de vacunación en Colombia</h1>
+
       <h2 className='text-5xl m-16 font-bold text-center'>Tablero descriptivo</h2>
       <EstadisticasGlobales data={data} />
       <ColombiaHeatMap data={data} />
@@ -139,8 +143,8 @@ function App() {
         {data && <BarChartVacunas data={data} />}
       </div>
       <LineChartVacuna data={data} />
+
       <h2 className='text-5xl m-16 font-bold text-center'>Tablero inferencial</h2>
-      {/* Selects globales */}
       <div className="mb-4 flex flex-col md:flex-row gap-4 justify-center w-2/3 mx-auto">
         <select
           className={getSelectStyle(periodo)}
@@ -173,6 +177,21 @@ function App() {
         vacuna={vacuna}
       />
       <ComparacionMediaHistorica
+        data={data}
+        departamentosPDET={departamentosPDET}
+        vacuna={vacuna}
+      />
+
+      <h2 className='text-5xl m-16 font-bold text-center'>Tablero clínico</h2>
+      <div className='flex m-16 gap-8 justify-between box-border'>
+        <TendenciaBrechaCobertura
+          data={data}
+          departamentosPDET={departamentosPDET}
+          vacuna={vacuna}
+        />
+        <CoberturaRecomendada data={data} vacuna={vacuna} departamentosPDET={departamentosPDET} />
+      </div>
+      <EstadisticasGrupoPeriodo
         data={data}
         departamentosPDET={departamentosPDET}
         vacuna={vacuna}

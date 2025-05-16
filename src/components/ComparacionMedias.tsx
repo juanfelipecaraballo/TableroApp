@@ -94,7 +94,7 @@ export default function ComparacionMedias({ data, departamentosPDET, vacuna }: P
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
-                <YAxis domain={[85, 100]} />
+                <YAxis domain={[80, 95]} />
                 <Tooltip
                   formatter={(value: number) => value.toFixed(1) + "%"}
                   labelFormatter={label => label}
